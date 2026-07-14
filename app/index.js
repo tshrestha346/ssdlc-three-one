@@ -9,8 +9,6 @@ const dotenv = require('dotenv');
 
 const result = dotenv.config();
 
-console.log(result);
-console.log("API_KEY =", process.env.API_KEY);
 const express = require('express');
 const { evaluate } = require('mathjs');
 const app = express();
