@@ -5,12 +5,19 @@
 // FIX 2: eval() replaced with a safe, sandboxed expression evaluator (mathjs).
 // FIX 3: lodash upgraded to a patched version - see package.fixed.json.
 
+const dotenv = require('dotenv');
+
+const result = dotenv.config();
+
+console.log(result);
+console.log("API_KEY =", process.env.API_KEY);
 const express = require('express');
 const { evaluate } = require('mathjs');
 const app = express();
 app.use(express.json());
 
 const API_KEY = process.env.API_KEY;
+console.log('asdfaf',API_KEY)
 if (!API_KEY) {
   throw new Error('API_KEY environment variable is required');
 }

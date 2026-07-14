@@ -2,12 +2,13 @@
   "name": "sdlc-security-demo-app",
   "version": "1.1.0",
   "description": "Simple Express app for a Secure SDLC / DevSecOps pipeline demo - remediated version.",
-  "main": "index.fixed.js",
+  "main": "index.js",
   "scripts": {
-    "start": "node index.fixed.js",
+    "start": "node index.js",
     "test": "node test.js"
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "express": "^4.19.2",
     "lodash": "^4.17.21",
     "mathjs": "^13.0.0"
