@@ -49,7 +49,7 @@ jobs:
         run: pip install semgrep
 
       - name: Run static code analysis (Semgrep)
-        run: semgrep --config=p/security-audit --error .
+        run: semgrep --config=p/security-audit --config=semgrep-rules.yml --error .
 
       # ---- SECURITY GATE 3: Software Composition Analysis (SCA) ----
       # Checks all third-party dependencies against known CVE databases.

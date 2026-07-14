@@ -6,6 +6,7 @@ during development instead of after deployment.
 
 ## The idea in one sentence
 
+
 Instead of checking security once at the end of a project, this pipeline
 checks it automatically at every push - "shifting security left" in the SDLC.
 
