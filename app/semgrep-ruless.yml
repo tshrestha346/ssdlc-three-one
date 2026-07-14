@@ -1,0 +1,19 @@
+rules:
+  - id: dangerous-eval-usage
+    languages: [javascript]
+    severity: ERROR
+    message: >-
+      Use of eval() detected. Executing eval() on data that may come from
+      user input can lead to arbitrary code execution (code injection).
+    patterns:
+      - pattern: eval(...)
+
+  - id: hardcoded-secret-assignment
+    languages: [generic]
+    severity: ERROR
+    message: >-
+      Hardcoded secret/API key found in source code. Secrets must be loaded
+      from environment variables or a secret manager, never committed to
+      source control.
+    patterns:
+      - pattern-regex: '(API_KEY|SECRET|PASSWORD|TOKEN)\s*=\s*[''"][^''"]+[''"]'
