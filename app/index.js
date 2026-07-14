@@ -10,7 +10,7 @@ app.use(express.json());
 // VULNERABILITY 1: Hardcoded secret in source code.
 // Should never be committed to git - caught by secrets scanning (Gitleaks)
 // and static analysis (Semgrep).
-const API_KEY = 'asdf@#4Sef@fW#$F3SS#4';
+const API_KEY = 'a8f3k2m9x7q1w4e6r8t0y2u4i6o8p0a2';
 
 // VULNERABILITY 2: eval() run on user-supplied input.
 // This lets an attacker run arbitrary JavaScript on the server - a
