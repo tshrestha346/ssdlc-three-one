@@ -1,24 +1,28 @@
-// index.js
-// Simple Express app used to demonstrate a Secure SDLC / DevSecOps pipeline.
-// This is the "BEFORE" version - it intentionally contains 3 common
-// vulnerabilities so the pipeline can catch them automatically.
+// index.fixed.js
+// The "AFTER" version - same app, with all 3 vulnerabilities fixed.
+//
+// FIX 1: secret now comes from an environment variable, never committed.
+// FIX 2: eval() replaced with a safe, sandboxed expression evaluator (mathjs).
+// FIX 3: lodash upgraded to a patched version - see package.fixed.json.
 
 const express = require('express');
+const { evaluate } = require('mathjs');
 const app = express();
 app.use(express.json());
 
-// VULNERABILITY 1: Hardcoded secret in source code.
-// Should never be committed to git - caught by secrets scanning (Gitleaks)
-// and static analysis (Semgrep).
-const API_KEY = 'asdf2@#$23ASfSDfg2342#4sdg24@sdAsf';
+const API_KEY = process.env.API_KEY;
+if (!API_KEY) {
+  throw new Error('API_KEY environment variable is required');
+}
 
-// VULNERABILITY 2: eval() run on user-supplied input.
-// This lets an attacker run arbitrary JavaScript on the server - a
-// classic code injection flaw. Caught by static analysis (Semgrep).
 app.post('/calc', (req, res) => {
   const expression = req.body.expression;
-  const result = eval(expression); // NEVER do this with untrusted input
-  res.json({ result });
+  try {
+    const result = evaluate(expression); // sandboxed, no arbitrary code execution
+    res.json({ result });
+  } catch (err) {
+    res.status(400).json({ error: 'Invalid expression' });
+  }
 });
 
 app.get('/health', (req, res) => {
@@ -29,7 +33,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Demo app listening on port ${PORT}`));
 
 module.exports = app;
-
-// VULNERABILITY 3 is NOT in this file - it's in package.json, where an
-// outdated version of the "lodash" library with a known CVE is listed
-// as a dependency. This is caught by dependency scanning (npm audit).
