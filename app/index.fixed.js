@@ -1,10 +1,3 @@
-// index.fixed.js
-// The "AFTER" version - same app, with all 3 vulnerabilities fixed.
-//
-// FIX 1: secret now comes from an environment variable, never committed.
-// FIX 2: eval() replaced with a safe, sandboxed expression evaluator (mathjs).
-// FIX 3: lodash upgraded to a patched version - see package.fixed.json.
-
 const express = require('express');
 const { evaluate } = require('mathjs');
 const app = express();
@@ -18,7 +11,7 @@ if (!API_KEY) {
 app.post('/calc', (req, res) => {
   const expression = req.body.expression;
   try {
-    const result = evaluate(expression); // sandboxed, no arbitrary code execution
+    const result = evaluate(expression);
     res.json({ result });
   } catch (err) {
     res.status(400).json({ error: 'Invalid expression' });

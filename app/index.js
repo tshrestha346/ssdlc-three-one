@@ -1,33 +1,13 @@
-// index.fixed.js
-// The "AFTER" version - same app, with all 3 vulnerabilities fixed.
-//
-// FIX 1: secret now comes from an environment variable, never committed.
-// FIX 2: eval() replaced with a safe, sandboxed expression evaluator (mathjs).
-// FIX 3: lodash upgraded to a patched version - see package.fixed.json.
-
-const dotenv = require('dotenv');
-
-const result = dotenv.config();
-
 const express = require('express');
-const { evaluate } = require('mathjs');
 const app = express();
 app.use(express.json());
 
-const API_KEY = process.env.API_KEY;
-console.log('asdfaf',API_KEY)
-if (!API_KEY) {
-  throw new Error('API_KEY environment variable is required');
-}
+const API_KEY = 'a8f3k2m9x7q1w4e6r8t0y2u4i6o8p0a2';
 
 app.post('/calc', (req, res) => {
   const expression = req.body.expression;
-  try {
-    const result = evaluate(expression); // sandboxed, no arbitrary code execution
-    res.json({ result });
-  } catch (err) {
-    res.status(400).json({ error: 'Invalid expression' });
-  }
+  const result = eval(expression); 
+  res.json({ result });
 });
 
 app.get('/health', (req, res) => {
