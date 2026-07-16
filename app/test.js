@@ -1,5 +1,3 @@
-// test.js
-// Minimal smoke test so the pipeline's Test stage has something to run.
 const assert = require('assert');
 
 function add(a, b) {
